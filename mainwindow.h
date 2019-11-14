@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QStandardItemModel>
+#include <QDoubleValidator>
 #include "eulersolver.h"
 #include "rksolver.h"
 #include "improvedeulersolver.h"
@@ -19,21 +20,38 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    ChartView* cv;
-
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    Chart* rebuild_plot();
-
-
 private slots:
     void update_plot();
     void set_step_count();
     void set_grid_step();
 
     void on_PlotResetBtn_clicked();
-
+    void show_totalEdit();
+    void hide_totalEdit();
 private:
+    ChartView* cv;
+    Chart* rebuild_plot();
+    bool checkForInputErrors();
     Ui::MainWindow *ui;
+};
+class DoubleValidator : public QDoubleValidator{
+    QStringList _decimalPoints;
+public:
+    DoubleValidator(){
+        _decimalPoints.append(".");
+        _decimalPoints.append(",");
+        _decimalPoints.append("comma");
+    }
+    State validate(QString &str, int &pos) const{
+        QString s(str);
+
+        for(QStringList::ConstIterator point = _decimalPoints.begin();
+                                point != _decimalPoints.end(); ++point){
+            s.replace(*point, locale().decimalPoint());
+        }
+        return QDoubleValidator::validate(s, pos);
+    }
 };
 #endif // MAINWINDOW_H

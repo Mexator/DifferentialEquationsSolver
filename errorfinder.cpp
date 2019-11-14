@@ -26,7 +26,7 @@ QVector<QVector<double>> ErrorFinder::findLocal(NumericalSolver* exact, Numerica
     for(int i=1;i<exactSolution[0].length();i++)
     {
         out[0][i] = exactSolution[0][i];
-        out[1][i] = exactSolution[1][i] - approx->ithApprox(exactSolution[0][i-1],exactSolution[1][i-1],F);
+        out[1][i] = abs(exactSolution[1][i] - approx->ithApprox(exactSolution[0][i-1],exactSolution[1][i-1],F));
     }
 
     return out;

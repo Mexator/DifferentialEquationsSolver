@@ -11,7 +11,6 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
@@ -46,28 +45,35 @@ public:
     QHBoxLayout *horizontalLayout_4;
     QTableView *tableView;
     QWidget *ExactTab;
-    QHBoxLayout *horizontalLayout_5;
-    QGraphicsView *graphicsView;
     QHBoxLayout *horizontalLayout;
     QGroupBox *InitBox;
     QHBoxLayout *horizontalLayout_2;
-    QLabel *x0;
+    QLabel *lab2;
     QLineEdit *x0Edit;
-    QLabel *y0;
+    QLabel *lab3;
     QLineEdit *y0Edit;
-    QLabel *X;
+    QLabel *lab1;
     QLineEdit *XEdit;
     QSpacerItem *horizontalSpacer;
     QVBoxLayout *radioBtns;
     QRadioButton *solutionsRBtn;
     QRadioButton *localErrorsRBtn;
+    QRadioButton *totalErrorsRBtn;
     QSpacerItem *horizontalSpacer_2;
-    QGroupBox *GridBox;
+    QGroupBox *Grid;
     QVBoxLayout *verticalLayout;
     QLabel *GridSize;
     QLineEdit *GridCountEdit;
     QLabel *GridStep;
     QLineEdit *GridStepEdit;
+    QGroupBox *totalGrid;
+    QVBoxLayout *verticalLayout_4;
+    QLabel *GridSize_2;
+    QLineEdit *totalInitSteps;
+    QLabel *GridStep_2;
+    QLineEdit *totalFinStep;
+    QLabel *GridSize_3;
+    QLineEdit *totalStep;
     QMenuBar *menubar;
 
     void setupUi(QMainWindow *MainWindow)
@@ -121,13 +127,8 @@ public:
         tabWidget->addTab(TableTab, QString());
         ExactTab = new QWidget();
         ExactTab->setObjectName(QString::fromUtf8("ExactTab"));
-        horizontalLayout_5 = new QHBoxLayout(ExactTab);
-        horizontalLayout_5->setObjectName(QString::fromUtf8("horizontalLayout_5"));
-        graphicsView = new QGraphicsView(ExactTab);
-        graphicsView->setObjectName(QString::fromUtf8("graphicsView"));
-
-        horizontalLayout_5->addWidget(graphicsView);
-
+        ExactTab->setEnabled(true);
+        ExactTab->setAcceptDrops(false);
         tabWidget->addTab(ExactTab, QString());
 
         verticalLayout_2->addWidget(tabWidget);
@@ -144,10 +145,10 @@ public:
         InitBox->setMaximumSize(QSize(400, 500));
         horizontalLayout_2 = new QHBoxLayout(InitBox);
         horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
-        x0 = new QLabel(InitBox);
-        x0->setObjectName(QString::fromUtf8("x0"));
+        lab2 = new QLabel(InitBox);
+        lab2->setObjectName(QString::fromUtf8("lab2"));
 
-        horizontalLayout_2->addWidget(x0);
+        horizontalLayout_2->addWidget(lab2);
 
         x0Edit = new QLineEdit(InitBox);
         x0Edit->setObjectName(QString::fromUtf8("x0Edit"));
@@ -157,15 +158,16 @@ public:
         sizePolicy1.setHeightForWidth(x0Edit->sizePolicy().hasHeightForWidth());
         x0Edit->setSizePolicy(sizePolicy1);
         x0Edit->setMaximumSize(QSize(200, 16777215));
+        x0Edit->setClearButtonEnabled(false);
 
         horizontalLayout_2->addWidget(x0Edit);
 
-        y0 = new QLabel(InitBox);
-        y0->setObjectName(QString::fromUtf8("y0"));
-        sizePolicy.setHeightForWidth(y0->sizePolicy().hasHeightForWidth());
-        y0->setSizePolicy(sizePolicy);
+        lab3 = new QLabel(InitBox);
+        lab3->setObjectName(QString::fromUtf8("lab3"));
+        sizePolicy.setHeightForWidth(lab3->sizePolicy().hasHeightForWidth());
+        lab3->setSizePolicy(sizePolicy);
 
-        horizontalLayout_2->addWidget(y0);
+        horizontalLayout_2->addWidget(lab3);
 
         y0Edit = new QLineEdit(InitBox);
         y0Edit->setObjectName(QString::fromUtf8("y0Edit"));
@@ -174,15 +176,15 @@ public:
 
         horizontalLayout_2->addWidget(y0Edit);
 
-        X = new QLabel(InitBox);
-        X->setObjectName(QString::fromUtf8("X"));
+        lab1 = new QLabel(InitBox);
+        lab1->setObjectName(QString::fromUtf8("lab1"));
         QSizePolicy sizePolicy2(QSizePolicy::Minimum, QSizePolicy::Preferred);
         sizePolicy2.setHorizontalStretch(0);
         sizePolicy2.setVerticalStretch(0);
-        sizePolicy2.setHeightForWidth(X->sizePolicy().hasHeightForWidth());
-        X->setSizePolicy(sizePolicy2);
+        sizePolicy2.setHeightForWidth(lab1->sizePolicy().hasHeightForWidth());
+        lab1->setSizePolicy(sizePolicy2);
 
-        horizontalLayout_2->addWidget(X);
+        horizontalLayout_2->addWidget(lab1);
 
         XEdit = new QLineEdit(InitBox);
         XEdit->setObjectName(QString::fromUtf8("XEdit"));
@@ -211,6 +213,11 @@ public:
 
         radioBtns->addWidget(localErrorsRBtn);
 
+        totalErrorsRBtn = new QRadioButton(centralwidget);
+        totalErrorsRBtn->setObjectName(QString::fromUtf8("totalErrorsRBtn"));
+
+        radioBtns->addWidget(totalErrorsRBtn);
+
 
         horizontalLayout->addLayout(radioBtns);
 
@@ -218,34 +225,72 @@ public:
 
         horizontalLayout->addItem(horizontalSpacer_2);
 
-        GridBox = new QGroupBox(centralwidget);
-        GridBox->setObjectName(QString::fromUtf8("GridBox"));
-        GridBox->setMinimumSize(QSize(200, 0));
-        GridBox->setMaximumSize(QSize(200, 16777215));
-        verticalLayout = new QVBoxLayout(GridBox);
+        Grid = new QGroupBox(centralwidget);
+        Grid->setObjectName(QString::fromUtf8("Grid"));
+        Grid->setMinimumSize(QSize(200, 0));
+        Grid->setMaximumSize(QSize(200, 16777215));
+        verticalLayout = new QVBoxLayout(Grid);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-        GridSize = new QLabel(GridBox);
+        GridSize = new QLabel(Grid);
         GridSize->setObjectName(QString::fromUtf8("GridSize"));
 
         verticalLayout->addWidget(GridSize);
 
-        GridCountEdit = new QLineEdit(GridBox);
+        GridCountEdit = new QLineEdit(Grid);
         GridCountEdit->setObjectName(QString::fromUtf8("GridCountEdit"));
 
         verticalLayout->addWidget(GridCountEdit);
 
-        GridStep = new QLabel(GridBox);
+        GridStep = new QLabel(Grid);
         GridStep->setObjectName(QString::fromUtf8("GridStep"));
 
         verticalLayout->addWidget(GridStep);
 
-        GridStepEdit = new QLineEdit(GridBox);
+        GridStepEdit = new QLineEdit(Grid);
         GridStepEdit->setObjectName(QString::fromUtf8("GridStepEdit"));
 
         verticalLayout->addWidget(GridStepEdit);
 
 
-        horizontalLayout->addWidget(GridBox);
+        horizontalLayout->addWidget(Grid);
+
+        totalGrid = new QGroupBox(centralwidget);
+        totalGrid->setObjectName(QString::fromUtf8("totalGrid"));
+        totalGrid->setCheckable(false);
+        verticalLayout_4 = new QVBoxLayout(totalGrid);
+        verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
+        GridSize_2 = new QLabel(totalGrid);
+        GridSize_2->setObjectName(QString::fromUtf8("GridSize_2"));
+
+        verticalLayout_4->addWidget(GridSize_2);
+
+        totalInitSteps = new QLineEdit(totalGrid);
+        totalInitSteps->setObjectName(QString::fromUtf8("totalInitSteps"));
+
+        verticalLayout_4->addWidget(totalInitSteps);
+
+        GridStep_2 = new QLabel(totalGrid);
+        GridStep_2->setObjectName(QString::fromUtf8("GridStep_2"));
+
+        verticalLayout_4->addWidget(GridStep_2);
+
+        totalFinStep = new QLineEdit(totalGrid);
+        totalFinStep->setObjectName(QString::fromUtf8("totalFinStep"));
+
+        verticalLayout_4->addWidget(totalFinStep);
+
+        GridSize_3 = new QLabel(totalGrid);
+        GridSize_3->setObjectName(QString::fromUtf8("GridSize_3"));
+
+        verticalLayout_4->addWidget(GridSize_3);
+
+        totalStep = new QLineEdit(totalGrid);
+        totalStep->setObjectName(QString::fromUtf8("totalStep"));
+
+        verticalLayout_4->addWidget(totalStep);
+
+
+        horizontalLayout->addWidget(totalGrid);
 
 
         verticalLayout_2->addLayout(horizontalLayout);
@@ -273,19 +318,27 @@ public:
         tabWidget->setTabText(tabWidget->indexOf(TableTab), QCoreApplication::translate("MainWindow", "Table", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(ExactTab), QCoreApplication::translate("MainWindow", "Exact Solution", nullptr));
         InitBox->setTitle(QCoreApplication::translate("MainWindow", "Initial conditions", nullptr));
-        x0->setText(QCoreApplication::translate("MainWindow", "x0:", nullptr));
+        lab2->setText(QCoreApplication::translate("MainWindow", "x0:", nullptr));
         x0Edit->setText(QCoreApplication::translate("MainWindow", "1", nullptr));
-        y0->setText(QCoreApplication::translate("MainWindow", "y0:", nullptr));
+        lab3->setText(QCoreApplication::translate("MainWindow", "y0:", nullptr));
         y0Edit->setText(QCoreApplication::translate("MainWindow", "2", nullptr));
-        X->setText(QCoreApplication::translate("MainWindow", "X:", nullptr));
+        lab1->setText(QCoreApplication::translate("MainWindow", "X:", nullptr));
         XEdit->setText(QCoreApplication::translate("MainWindow", "10", nullptr));
         solutionsRBtn->setText(QCoreApplication::translate("MainWindow", "Solutions", nullptr));
         localErrorsRBtn->setText(QCoreApplication::translate("MainWindow", "Local Errors", nullptr));
-        GridBox->setTitle(QCoreApplication::translate("MainWindow", "Grid settings", nullptr));
+        totalErrorsRBtn->setText(QCoreApplication::translate("MainWindow", "Total Errors", nullptr));
+        Grid->setTitle(QCoreApplication::translate("MainWindow", "Grid settings", nullptr));
         GridSize->setText(QCoreApplication::translate("MainWindow", "Grid steps number", nullptr));
-        GridCountEdit->setText(QCoreApplication::translate("MainWindow", "90", nullptr));
+        GridCountEdit->setText(QCoreApplication::translate("MainWindow", "9", nullptr));
         GridStep->setText(QCoreApplication::translate("MainWindow", "Grid step size", nullptr));
         GridStepEdit->setText(QCoreApplication::translate("MainWindow", "1", nullptr));
+        totalGrid->setTitle(QCoreApplication::translate("MainWindow", "Grid settings", nullptr));
+        GridSize_2->setText(QCoreApplication::translate("MainWindow", "Initial Grid steps number", nullptr));
+        totalInitSteps->setText(QCoreApplication::translate("MainWindow", "10", nullptr));
+        GridStep_2->setText(QCoreApplication::translate("MainWindow", "Final Grid steps number", nullptr));
+        totalFinStep->setText(QCoreApplication::translate("MainWindow", "50", nullptr));
+        GridSize_3->setText(QCoreApplication::translate("MainWindow", "Step", nullptr));
+        totalStep->setText(QCoreApplication::translate("MainWindow", "1", nullptr));
     } // retranslateUi
 
 };

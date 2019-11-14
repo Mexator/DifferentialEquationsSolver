@@ -1,11 +1,12 @@
 #include "modelbuilder.h"
 
-ModelBuilder::ModelBuilder(QVector<NumericalSolver*> solvers)
+ModelBuilder::ModelBuilder(QVector<NumericalSolver*> solvers,int exact_index)
 {
     this->solvers = solvers;
+    this->exact_index=exact_index;
 }
 QStandardItemModel* ModelBuilder::buildSolutionsModel(double (*F)(double, double),
-                                  double x0, double y0, double X, double h)
+                                                      double x0, double y0, double X, double h)
 {
     const int solvers_num = solvers.length();
     const int series_num = solvers_num;
@@ -23,7 +24,7 @@ QStandardItemModel* ModelBuilder::buildSolutionsModel(double (*F)(double, double
     }
 
     QStandardItemModel* model = new QStandardItemModel(solutions[0][0].length(),
-                                                        series_num+1);
+            series_num+1);
 
     for(int i=0;i<solutions[0][0].length();i++)
     {
@@ -56,7 +57,7 @@ QStandardItemModel* ModelBuilder::buildLocalErrorsModel(
     ErrorFinder ef(h,x0,y0,X);
     for (int i=0;i<solvers_num-1;i++)
     {
-        solutions[i] = ef.findLocal(solvers[3],solvers[i],F);
+        solutions[i] = ef.findLocal(solvers[exact_index],solvers[i],F);
     }
     ef.~ErrorFinder();
 
@@ -65,7 +66,7 @@ QStandardItemModel* ModelBuilder::buildLocalErrorsModel(
 
     for(int i=0;i<solutions[0][0].length();i++)
     {
-        QModelIndex index = model->index(i,0,QModelIndex());
+        QModelIndex index = model->index(i,0);
         //Setting X-s to 1st column
         model->setData(index,solutions[0][0][i]);
 
@@ -80,11 +81,30 @@ QStandardItemModel* ModelBuilder::buildLocalErrorsModel(
 }
 QStandardItemModel* ModelBuilder::buildTotalErrorsModel(
         double (*F)(double, double), double x0, double y0,
-        double X, double n1, double n2, double step)
+        double X, int n1, int n2, int step)
 {
     const int solvers_num = solvers.length();
+    QStandardItemModel* model = new QStandardItemModel(
+                static_cast<int>(ceil((n2-n1+1)/step)),solvers_num);
 
+    ErrorFinder ef(1,x0,y0,X);
+    int cur_n = n1;
+    for(int i = 0; cur_n <= n2; i++, cur_n+=step)
+    {
+        ef.setH((X-x0)/cur_n);
 
+        QModelIndex index = model->index(i,0);
+        model->setData(index,cur_n);
+
+        for(int j=0;j<solvers_num;j++)
+        {
+            if(j == exact_index) continue;
+            double total_error = ef.findTotal(solvers[exact_index],solvers[j],F);
+            index = model->index(i,j+1);
+            model->setData(index,total_error);
+        }
+    }
+    return model;
 }
 QVector<NumericalSolver*> ModelBuilder::getSolvers()
 {

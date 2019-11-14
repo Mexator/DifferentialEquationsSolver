@@ -21,10 +21,6 @@ public:
     virtual double ithApprox(double xi,double yi, double (*F)(double, double))=0;
     //Getters
     QString getName();
-//    double getH();
-//    double getX0();
-//    double gety0();
-//    double getX();
     virtual ~NumericalSolver();
 };
 #endif // NUMERICALSOLVER_H

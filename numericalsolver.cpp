@@ -28,6 +28,7 @@ QVector<QVector<double>> NumericalSolver::solveFor(double (*F)(double, double), 
     this->x0=x0;
     this->y0=y0;
     this->X=X;
+
     qDebug() << "count_set=" << this->count_set << " step_set="<< this->step_set;
     //Initializing vector
     QVector<QVector<double>> points(2);

@@ -80,14 +80,15 @@
        </layout>
       </widget>
       <widget class="QWidget" name="ExactTab">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="acceptDrops">
+        <bool>false</bool>
+       </property>
        <attribute name="title">
         <string>Exact Solution</string>
        </attribute>
-       <layout class="QHBoxLayout" name="horizontalLayout_5">
-        <item>
-         <widget class="QGraphicsView" name="graphicsView"/>
-        </item>
-       </layout>
       </widget>
      </widget>
     </item>
@@ -112,7 +113,7 @@
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
-          <widget class="QLabel" name="x0">
+          <widget class="QLabel" name="lab2">
            <property name="text">
             <string>x0:</string>
            </property>
@@ -135,10 +136,13 @@
            <property name="text">
             <string>1</string>
            </property>
+           <property name="clearButtonEnabled">
+            <bool>false</bool>
+           </property>
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="y0">
+          <widget class="QLabel" name="lab3">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
              <horstretch>0</horstretch>
@@ -164,7 +168,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="X">
+          <widget class="QLabel" name="lab1">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -224,6 +228,13 @@
           </property>
          </widget>
         </item>
+        <item>
+         <widget class="QRadioButton" name="totalErrorsRBtn">
+          <property name="text">
+           <string>Total Errors</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
       <item>
@@ -240,7 +251,7 @@
        </spacer>
       </item>
       <item>
-       <widget class="QGroupBox" name="GridBox">
+       <widget class="QGroupBox" name="Grid">
         <property name="minimumSize">
          <size>
           <width>200</width>
@@ -267,7 +278,7 @@
          <item>
           <widget class="QLineEdit" name="GridCountEdit">
            <property name="text">
-            <string>90</string>
+            <string>9</string>
            </property>
           </widget>
          </item>
@@ -280,6 +291,60 @@
          </item>
          <item>
           <widget class="QLineEdit" name="GridStepEdit">
+           <property name="text">
+            <string>1</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="totalGrid">
+        <property name="title">
+         <string>Grid settings</string>
+        </property>
+        <property name="checkable">
+         <bool>false</bool>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_4">
+         <item>
+          <widget class="QLabel" name="GridSize_2">
+           <property name="text">
+            <string>Initial Grid steps number</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="totalInitSteps">
+           <property name="text">
+            <string>10</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="GridStep_2">
+           <property name="text">
+            <string>Final Grid steps number</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="totalFinStep">
+           <property name="text">
+            <string>50</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="GridSize_3">
+           <property name="text">
+            <string>Step</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="totalStep">
            <property name="text">
             <string>1</string>
            </property>
