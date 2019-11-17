@@ -27,7 +27,7 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWin
     ui->setupUi(this);
 
     Chart* tmp;
-    if((tmp = rebuild_plot()) != nullptr)
+    if((tmp = rebuild_model()) != nullptr)
         cv = new ChartView(tmp);
 
     cv->setRenderHint(QPainter::Antialiasing);
@@ -65,10 +65,10 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWin
     ui->GridCountEdit->setValidator(new QIntValidator());
     ui->GridStepEdit->setValidator(new DoubleValidator());
 }
-Chart* MainWindow::rebuild_plot()
+Chart* MainWindow::rebuild_model()
 {
     const int solvers_num = 4;
-    if(checkForInputErrors())
+    if(check_for_input_errors())
     {
         return nullptr;
     }
@@ -147,7 +147,7 @@ void MainWindow::update_plot()
 
     perror("update");
     Chart* tmp;
-    if((tmp = rebuild_plot()) != nullptr)
+    if((tmp = rebuild_model()) != nullptr)
         cv->setChart(tmp);
 
     QObject::sender()->blockSignals(false);
@@ -183,7 +183,7 @@ void MainWindow::hide_totalEdit()
     ui->totalGrid->setVisible(false);
     ui->Grid->setVisible(true);
 }
-bool MainWindow::checkForInputErrors()
+bool MainWindow::check_for_input_errors()
 {
     double x0 = ui->x0Edit->text().toDouble();
     double X = ui->XEdit->text().toDouble();

@@ -32,8 +32,8 @@ private slots:
     void hide_totalEdit();
 private:
     ChartView* cv;
-    Chart* rebuild_plot();
-    bool checkForInputErrors();
+    Chart* rebuild_model();
+    bool check_for_input_errors();
     Ui::MainWindow *ui;
 };
 class DoubleValidator : public QDoubleValidator{
